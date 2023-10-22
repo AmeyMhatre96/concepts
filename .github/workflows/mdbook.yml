@@ -31,6 +31,9 @@ jobs:
     env:
       MDBOOK_VERSION: 0.4.21
     steps:
+      - name: Checkout code
+      - uses: actions/checkout@v3
+
       - name: Cache mdbook dependencies
       - uses: actions/cache@v2
       - with:
@@ -38,7 +41,7 @@ jobs:
           key: mdbook-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             mdbook-${{ runner.os }}-
-      - uses: actions/checkout@v3
+
       - name: Install mdBook
         run: |
           curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
