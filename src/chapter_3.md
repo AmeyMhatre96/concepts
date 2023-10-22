@@ -85,3 +85,22 @@ NuGet is a package manager for .NET that allows you to manage and consume librar
 
 In summary, PackageReference is the recommended and more modern way to manage NuGet packages in .NET projects. It offers better integration, automatic handling of transitive dependencies, and a cleaner project file. packages.config is still supported but is considered a legacy approach and is mainly used in older projects. If you're starting a new project or migrating an existing one to a more modern .NET environment, it's advisable to use PackageReference.
 
+
+### .NET Core CLI
+
+The .NET Core CLI (Command Line Interface) is a cross-platform toolchain for developing .NET applications. It's a set of command-line tools that allow you to create, build, test, and run .NET applications. The .NET CLI is built on top of the .NET SDK, which provides the necessary libraries and tools for building and running .NET applications.
+
+#### Using the .NET CLI
+
+```bash
+dotnet new sln -o myapp
+
+dotnet new console -o myapp
+
+dotnet sln add myapp
+
+dotnet run
+
+dotnet publish -c Release -r win-x64
+
+```
