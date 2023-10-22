@@ -220,3 +220,233 @@ class Program
 }
 
 ```
+## Solid principles
+### 1. Single Responsibility Principle
+A class should have one responsibility. 
+When a class has only one responsibility, it becomes easier to change that class without impacting other parts of the code. 
+
+Example that violates SRP:
+
+``` csharp
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Designation { get; set; }
+    public decimal Salary { get; set; }
+
+    public void Save(){
+        //Save employee to database
+    }
+}
+```
+Better approach:
+``` csharp
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Designation { get; set; }
+    public decimal Salary { get; set; }
+}
+
+public class EmployeeRepository
+{
+    public void Save(Employee employee){
+        //Save employee to database
+    }
+}
+
+```
+
+### 2. Open Closed Principle
+Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification.
+In other words, you should be able to extend a class’s behavior, without modifying it. 
+When we violate this principle, complete class needs to be retested.
+
+Example that violates OCP:
+``` csharp
+public class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Designation { get; set; }
+    public decimal Salary { get; set; }
+
+    public decimal CalculateBonus(string employeeType){
+        if(employeeType == "parmanent"){
+            return Salary * .1M;
+        }
+        else{
+            return Salary * .05M;
+        }
+    }
+}
+```
+Better approach:
+``` csharp
+public abstract class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Designation { get; set; }
+    public decimal Salary { get; set; }
+
+    public abstract decimal CalculateBonus();
+}
+
+public class PermanentEmployee : Employee
+{
+    public override decimal CalculateBonus()
+    {
+        return Salary * .1M;
+    }
+}
+```
+
+### 3. Liskov Substitution Principle
+Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
+
+Example that violates LSP:
+``` csharp
+class Rectangle
+{
+    public virtual int Width { get; set; }
+    public virtual int Height { get; set; }
+}
+
+class Square : Rectangle
+{
+    public override int Width
+    {
+        get => base.Width;
+        set
+        {
+            base.Width = value;
+            base.Height = value;
+        }
+    }
+
+    public override int Height
+    {
+        get => base.Height;
+        set
+        {
+            base.Width = value;
+            base.Height = value;
+        }
+    }
+}
+
+``` 
+
+### 4. Interface Segregation Principle
+Clients should not be forced to depend upon interfaces that they do not use.
+Its better to have many smaller interfaces than one larger interface.
+
+Example that violates ISP:
+``` csharp
+public interface IVehicle
+{
+    void Drive();
+    void Fly();
+}
+
+public class Car : IVehicle
+{
+    public void Drive()
+    {
+        //actions to drive a car
+    }
+
+    public void Fly()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class Airplane : IVehicle
+{
+    public void Drive()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Fly()
+    {
+        //actions to fly an airplane
+    }
+}
+```
+
+Better approach:
+``` csharp
+public interface IDrive
+{
+    void Drive();
+}
+
+public interface IFly
+{
+    void Fly();
+}
+
+public class Car : IDrive
+{
+    public void Drive()
+    {
+        //actions to drive a car
+    }
+}
+
+public class FlyingCar : IFly, IDrive
+{
+    public void Drive()
+    {
+        //actions to drive a car
+    }
+
+    public void Fly()
+    {
+        //actions to fly a car
+    }
+}
+```
+
+### 5. Dependency Inversion Principle
+High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details. Details should depend on abstractions. 
+
+Example:
+``` csharp
+public interface INotifier
+{
+    void Notify(string message);
+}
+
+public class EmailNotifier : INotifier
+{
+    public void Notify(string message) { /* Send email */ }
+}
+
+public class SMSNotifier : INotifier
+{
+    public void Notify(string message) { /* Send SMS */ }
+}
+
+public class WeatherApp
+{
+    private INotifier notifier;
+
+    public WeatherApp(INotifier notifier)
+    {
+        this.notifier = notifier;
+    }
+
+    public void CheckWeather()
+    {
+        // ... Weather checking logic ...
+        notifier.Notify("Weather alert: ...");
+    }
+}
+
+```
