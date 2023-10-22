@@ -1,2 +1,2 @@
 # Summary
-- [Object oriented](./chapters/chapter_1.md)
+- [Object oriented](./chapter_1.md)
