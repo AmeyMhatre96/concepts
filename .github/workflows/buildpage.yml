@@ -32,7 +32,7 @@ jobs:
           curl -LO https://github.com/rust-lang/mdBook/releases/download/v0.4.35/mdbook-v0.4.35-aarch64-unknown-linux-musl.tar.gz
           tar -xzf mdbook-v0.4.35-aarch64-unknown-linux-musl.tar.gz
           chmod +x mdbook
-          shell: bash
+        shell: bash
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
