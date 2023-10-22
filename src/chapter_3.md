@@ -104,3 +104,69 @@ dotnet run
 dotnet publish -c Release -r win-x64
 
 ```
+
+### ASP.NET Core startup
+
+The ASP.NET Core startup class is a class that configures services and the request pipeline for an ASP.NET Core application. It's a convention-based class that's named Startup by default, but you can change the name if you want. The startup class is usually located in the root namespace of the project.
+
+The startup class is responsible for configuring the following:
+
+- **Services**: The ConfigureServices method is used to configure services that are used by the application. This method is called by the runtime before the Configure method.
+
+- **Request Pipeline**: The Configure method is used to configure the request pipeline, which is a series of middleware components that process incoming HTTP requests. This method is called by the runtime after the ConfigureServices method.
+
+The following example shows a typical startup class:
+
+```csharp
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers();
+    }
+
+    public void Configure(IApplicationBuilder app)
+    {
+        app.UseRouting();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+    }
+}
+```
+
+### ASP.NET Core middleware
+
+ASP.NET Core middleware is a software component that's used to handle requests and responses in an ASP.NET Core application. It's a piece of code that's executed in the request pipeline to perform a specific task, such as authentication, logging, or routing. Middleware components are executed in the order they're added to the pipeline.
+
+The following example shows a middleware component that logs the request path:
+
+```csharp
+public class RequestLoggerMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public RequestLoggerMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+        Console.WriteLine($"Request path: {context.Request.Path}");
+        await _next(context);
+    }
+}
+```
+
+The following example shows how to add the middleware component to the request pipeline:
+
+```csharp
+
+public void Configure(IApplicationBuilder app)
+{
+    app.UseMiddleware<RequestLoggerMiddleware>();
+}
+```
