@@ -1,3 +1,4 @@
 # Summary
 - [Object oriented](./chapter_1.md)
-- [.NET Core](./chapter_2.md)
+- [C#](./chapter_2.md)
+- [.NET Core](./chapter_3.md)
