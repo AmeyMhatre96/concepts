@@ -1,5 +1,20 @@
 # .NET Core Security
 
+.NET Core provides flexibility to support authentication, authorization in varying ways
+1. Custom setup including middleware based authentication
+   Custom setup is required when you want to use custom authentication scheme or custom authorization logic or both. 
+    This is the most flexible approach but requires more work.
+    You can realize this approach by using middleware based authentication and authorization. 
+
+2. Microsoft identity
+    Microsoft identity is a framework for managing user identities. It enables authentication and authorization for your apps. It also provides a framework for handling user accounts that supports account confirmation, password reset, and more.
+
+
+3. External Auth2 providers
+    External authentication providers are services that authenticate users for you. They include Google, Facebook, Twitter, and more. They're often referred to as social logins.
+
+
+
 ## Microsoft Identity
 
 Microsoft Identity is a framework for managing user identities. It enables authentication and authorization for your apps. It also provides a framework for handling user accounts that supports account confirmation, password reset, and more.
@@ -72,3 +87,7 @@ Microsoft Identity is built on top of ASP.NET Core Identity. It's a set of libra
 
 ## Authorization
 
+
+## Json Web Tokens (JWT)
+
+Json Web Tokens (JWT) are an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
