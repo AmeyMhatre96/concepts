@@ -94,6 +94,37 @@ string greeting = hello + ", " + world;
 bool areEqual = (hello == world);
 ```
 
+#### ref vs out 
+
+**`ref` Parameter:**
+- Requires variable initialization.
+- Supports two-way communication.
+- Used for both input and output.
+
+**`out` Parameter:**
+- Doesn't require variable initialization.
+- Supports one-way communication.
+- Primarily used for output values.
+
+Example:
+
+```csharp
+// Using ref
+void ModifyWithRef(ref int x) { /* ... */ }
+
+int value1 = 5;
+ModifyWithRef(ref value1);
+
+// Using out
+void GetOutput(out int x, out int y) { /* ... */ }
+
+int value2;
+int value3;
+GetOutput(out value2, out value3);
+```
+
+In summary, `ref` is for two-way communication, `out` is for one-way output, and `out` doesn't require variable initialization.
+
 ### Deligates, Events, and Lambdas
 
 #### Delegates
