@@ -7,4 +7,4 @@
 - [API Protocols](./chapter_6.md)
 - [Frontend](./frontend/index.md)
     - [React](./frontend/react.md)
-    - [Angular](. frontend/angular.md)
+    - [Angular](./frontend/angular.md)
