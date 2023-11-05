@@ -1,0 +1,1 @@
+https://www.danywalls.com/essential-angular-questions-for-junior-and-mid-level-job-interviews
