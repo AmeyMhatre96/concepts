@@ -136,37 +136,3 @@ public class Startup
     }
 }
 ```
-
-### ASP.NET Core middleware
-
-ASP.NET Core middleware is a software component that's used to handle requests and responses in an ASP.NET Core application. It's a piece of code that's executed in the request pipeline to perform a specific task, such as authentication, logging, or routing. Middleware components are executed in the order they're added to the pipeline.
-
-The following example shows a middleware component that logs the request path:
-
-```csharp
-public class RequestLoggerMiddleware
-{
-    private readonly RequestDelegate _next;
-
-    public RequestLoggerMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task Invoke(HttpContext context)
-    {
-        Console.WriteLine($"Request path: {context.Request.Path}");
-        await _next(context);
-    }
-}
-```
-
-The following example shows how to add the middleware component to the request pipeline:
-
-```csharp
-
-public void Configure(IApplicationBuilder app)
-{
-    app.UseMiddleware<RequestLoggerMiddleware>();
-}
-```
