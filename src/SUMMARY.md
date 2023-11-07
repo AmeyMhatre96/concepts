@@ -1,5 +1,6 @@
 # Summary
-- [Object oriented](./chapter_1.md)
+- [Object oriented](./object-oriented.md)
+- [Patterns](./patterns.md)
 - [.NET](./dotnet/index.md)
     - [C# Lang](./dotnet/csharp.md)
     - [Threading](./dotnet/threading.md)
@@ -7,7 +8,7 @@
         - [Security](./dotnet-core/security.md)
         - [Logging](./dotnet-core/logging.md)
         - [Middleware](./dotnet-core/middleware.md)
-- [API Protocols](./chapter_6.md)
+- [API Protocols](./api-protocols.md)
 - [Frontend](./frontend/index.md)
     - [React](./frontend/react.md)
     - [Angular](./frontend/angular.md)
