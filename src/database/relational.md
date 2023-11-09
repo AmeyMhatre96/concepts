@@ -264,3 +264,132 @@ SQL (Structured Query Language) is a domain-specific language used for managing 
 
 7. **Vendor-Specific SQL:**
    - Different database management systems (DBMS) may introduce their own extensions or variations to SQL. For example, Microsoft SQL Server uses `T-SQL`, Oracle has `PL/SQL`, and MySQL has its own extensions.
+
+
+## Views 
+
+A view is a virtual table based on the result set of a SQL statement. It is stored in the database and can be used like a regular table. Views are useful for simplifying complex queries and hiding the underlying table structure. They can also be used to restrict access to sensitive data. Views can be created using the `CREATE VIEW` statement. For example, to create a view named `CustomersView` that contains the `CustomerID` and `CustomerName` columns from the `Customers` table, you can do the following:
+
+```sql
+
+CREATE VIEW CustomersView AS
+
+SELECT CustomerID, CustomerName
+FROM Customers;
+```
+
+You can then query the view like a regular table:
+
+```sql
+SELECT * FROM CustomersView;
+```   
+### Types of Views
+
+- Materialized Views
+  Materialized views are views that are stored in the database and updated periodically. They are useful for improving query performance by pre-computing expensive queries and storing the results in a table.
+
+- Non-Materialized
+  Non materialized views are views that are not stored in the database and are created on the fly when they are queried. They are useful for simplifying complex queries and hiding the underlying table structure. 
+
+
+## SQL Indexes
+
+An index is a data structure that improves the performance of data retrieval operations on a database table. It is used to quickly locate rows in a table based on the values in one or more columns. Indexes are created using the `CREATE INDEX` statement. For example, to create an index named `CustomerNameIndex` on the `CustomerName` column of the `Customers` table, you can do the following:
+
+```sql
+CREATE INDEX CustomerNameIndex ON Customers (CustomerName);
+```
+### Types of Indexes
+
+- Clustered Index
+  A clustered index is an index that determines the physical order of the rows in a table. It is created on the primary key column by default, but you can also create it on other columns. A table can only have one clustered index.
+
+- Non-Clustered Index
+   A non-clustered index is an index that does not determine the physical order of the rows in a table. It is created on a column or a set of columns that are not the primary key. A table can have multiple non-clustered indexes.
+
+- Multi-Column Index
+  A multi-column index is an index that is created on multiple columns. It is useful for queries that involve multiple columns.
+
+Choosing the right type of database index is crucial for optimizing database performance. The choice of index depends on the specific use case, the types of queries you run, and the characteristics of your data. Here are some guidelines for when to use different types of database indexes:
+
+1. **Primary Key Index:**
+   - Use a primary key index for columns that uniquely identify each row in a table. Typically, this index is automatically created for primary key columns.
+   - Use it when you need to enforce data integrity through unique constraints.
+
+2. **Unique Index:**
+   - Use a unique index for columns that must contain unique values, but are not the primary key.
+   - Use it to enforce uniqueness constraints on non-primary key columns.
+
+3. **Non-Unique Index:**
+   - Use a non-unique index for columns that you frequently search, join, or filter in queries.
+   - Use it for columns that have a relatively high cardinality, meaning they have many distinct values.
+
+4. **Composite Index (Multi-Column Index):**
+   - Use a composite index for queries that involve multiple columns. This is especially useful for filtering or searching on multiple columns in a single query.
+   - Order the columns in the index based on query patterns; the order matters.
+
+5. **Full-Text Index:**
+   - Use a full-text index for columns containing textual data (e.g., descriptions, articles, or product names) when you need to perform full-text search operations.
+   - Use it to improve the efficiency of text-based searching.
+
+6. **Spatial Index:**
+   - Use a spatial index for geographic or location-based data when you need to perform spatial queries, such as finding nearby points or regions.
+   - Use it to optimize queries involving geographical data.
+
+7. **Bitmap Index:**
+   - Use a bitmap index for columns with low cardinality, like boolean columns or gender columns.
+   - Use it when you have very specific queries that involve multiple boolean or categorical filters.
+
+8. **Hash Index:**
+   - Use a hash index for specific use cases, such as when you need to hash and index large amounts of data, and exact matches are important.
+   - Use it when dealing with scenarios like hash-based partitioning.
+
+9. **Clustered Index:**
+   - Use a clustered index for the primary key of a table. This determines the physical order of data rows in the table.
+   - Use it for tables that you frequently search, join, or retrieve data from.
+
+10. **Covering Index (Index with Included Columns):**
+    - Use a covering index to include non-key columns in the index, which can eliminate the need to access the base table for specific queries.
+    - Use it to improve query performance and reduce I/O operations.
+
+11. **Functional Index:**
+    - Use a functional index when you need to index the result of a function applied to a column, such as indexing the lowercase version of a string column for case-insensitive searches.
+    - Use it to optimize queries involving calculated or transformed values.
+
+12. **Partial Index:**
+    - Use a partial index to index only a subset of rows in a table based on a condition.
+    - Use it when you have a large table, but only need to index a portion of the data for specific queries.
+
+
+## Normalization
+
+Normalization is the process of organizing data in a database to reduce data redundancy and improve data integrity. It involves breaking up a table into multiple tables and defining relationships between them. Normalization is important because it helps reduce data redundancy and improve data integrity. It also makes it easier to maintain and update the database.
+
+There are several normal forms, each with its own set of rules. The most common normal forms are:
+
+1. **First Normal Form (1NF):**
+   - A table is in 1NF if it has no repeating groups (arrays or lists) and all its attributes contain atomic (indivisible) values.
+   - Ensure that each column contains a single value, and there are no arrays or lists.
+  
+   | CustomerID | CustomerName | Phone       | Salary      |
+   |------------|--------------|-------------| ----------- |
+   | 1          | Customer A   | 123-456-788, 123-456-789 | 1000 |
+   | 2          | Customer B   | 987-654-321 | 2000 |
+
+   - To convert the above table to 1NF, we need to split the `Phone` column into two separate rows.
+
+   | CustomerID | CustomerName | Phone       | Salary      |
+   |------------|--------------|-------------| ----------- |
+   | 1          | Customer A   | 123-456-788 | 1000 |
+   | 1          | Customer A   | 123-456-789 | 1000 |
+   | 2          | Customer B   | 987-654-321 | 2000 |
+
+
+2. **Second Normal Form (2NF):**
+
+   - A table is in 2NF if it is in 1NF and all non-key columns are fully dependent on the primary key.
+   - Example: The following table is not in 2NF because the `Price` column is not fully dependent on the primary key.
+     | ProductID | ProductName | CategoryID | CategoryName | Price |
+     |-----------|-------------|------------|--------------|-------|
+     | 1         | Product A   | 1          | Category A   | 10    |
+     | 2         | Product B   | 2          | Category B   | 20    |
