@@ -389,6 +389,7 @@ There are several normal forms, each with its own set of rules. The most common 
 
    - A table is in 2NF if it is in 1NF and all non-key columns are fully dependent on the primary key.
    - Example: The following table is not in 2NF because the `Price` column is not fully dependent on the primary key.
+  
      | ProductID | ProductName | CategoryID | CategoryName | Price |
      |-----------|-------------|------------|--------------|-------|
      | 1         | Product A   | 1          | Category A   | 10    |
